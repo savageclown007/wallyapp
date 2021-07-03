@@ -271,10 +271,19 @@ class _AccountPageState extends State<AccountPage> {
                                 StaggeredTile.fit(1),
                           );
                         } else {
-                          return SpinKitPulse(
-                            color: primaryColor,
-                            size: 50,
-                          );
+                          return Container(
+                      padding: EdgeInsets.all(25),
+                     margin: EdgeInsets.all(25),
+                      child: Column(
+                        children: [
+                          Icon(Icons.add_a_photo,
+                          color: Colors.grey,),
+                          Text("Upload some wallpapers",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 25,color: Colors.grey,fontWeight: FontWeight.bold),),
+                        ],
+                      ),
+                    );
                         }
                       }
                       return SpinKitPulse(
