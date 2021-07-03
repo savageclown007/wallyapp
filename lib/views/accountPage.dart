@@ -128,7 +128,7 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                   StreamBuilder(
                     stream: _db
-                        .collection("Wallpapers")
+                        .collection("Wallpapers").where("uploaded_by", isEqualTo: _user.uid.toString())
                         .orderBy("date", descending: true)
                         .snapshots(),
                     builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
