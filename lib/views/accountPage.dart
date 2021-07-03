@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:wallyapp/config/config.dart';
 import 'package:wallyapp/views/addImageDialogue.dart';
 import 'package:wallyapp/views/wallpaper_view_screen.dart';
@@ -80,6 +81,8 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                   TextButton(
                     onPressed: () {
+                      GoogleSignIn _googleSignIn = GoogleSignIn();
+                      _googleSignIn.disconnect();
                       _auth.signOut();
                     },
                     child: Padding(
@@ -128,7 +131,8 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                   StreamBuilder(
                     stream: _db
-                        .collection("Wallpapers").where("uploaded_by", isEqualTo: _user.uid.toString())
+                        .collection("Wallpapers")
+                        .where("uploaded_by", isEqualTo: _user.uid.toString())
                         .orderBy("date", descending: true)
                         .snapshots(),
                     builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -272,18 +276,25 @@ class _AccountPageState extends State<AccountPage> {
                           );
                         } else {
                           return Container(
-                      padding: EdgeInsets.all(25),
-                     margin: EdgeInsets.all(25),
-                      child: Column(
-                        children: [
-                          Icon(Icons.add_a_photo,
-                          color: Colors.grey,),
-                          Text("Upload some wallpapers",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 25,color: Colors.grey,fontWeight: FontWeight.bold),),
-                        ],
-                      ),
-                    );
+                            padding: EdgeInsets.all(25),
+                            margin: EdgeInsets.all(25),
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.add_a_photo,
+                                  color: Colors.grey,
+                                ),
+                                Text(
+                                  "Upload some wallpapers",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          );
                         }
                       }
                       return SpinKitPulse(
